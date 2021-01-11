@@ -3,27 +3,27 @@ package com.ajay.tech.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import lombok.AllArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Entity
 public class Menu {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GenericGenerator(name="menu_id", strategy="increment")
+	@GeneratedValue(generator="menu_id")
 	private Integer menuId;
 	
 	@Column
@@ -31,8 +31,23 @@ public class Menu {
 	@Column
 	private double price;
 
-
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "hotel_id")
-	private Hotel hotel;  
+	private Hotel hotel;
+
+	public Menu(String menuName, double price, Hotel hotel) {
+		super();
+		this.menuName = menuName;
+		this.price = price;
+		this.hotel = hotel;
+	}
+
+	@Override
+	public String toString() {
+		return "Menu [menuName=" + menuName + ", price=" + price + "]";
+	}
+
+	
+	
 }

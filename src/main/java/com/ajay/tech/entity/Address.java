@@ -1,28 +1,24 @@
 package com.ajay.tech.entity;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.AllArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Entity
 public class Address {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GenericGenerator(name="add_id", strategy="increment")
+	@GeneratedValue(generator="add_id")
 	private Integer addressId;
 	
 	@Column
@@ -36,5 +32,19 @@ public class Address {
 	
 	@Column
 	private String state;
+
+	public Address(String city, String streetName, long zipcode, String state) {
+		super();
+		this.city = city;
+		this.streetName = streetName;
+		this.zipcode = zipcode;
+		this.state = state;
+	}
+
+	@Override
+	public String toString() {
+		return "Address [city=" + city + ", streetName=" + streetName + ", zipcode=" + zipcode + ", state=" + state
+				+ "]";
+	}
 
 }

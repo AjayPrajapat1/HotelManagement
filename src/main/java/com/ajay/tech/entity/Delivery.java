@@ -6,26 +6,26 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import lombok.AllArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Entity
 public class Delivery {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GenericGenerator(name="delivery_id", strategy="increment")
+	@GeneratedValue(generator="delivery_id")
 	private Integer deliveryId;
 	
 	@Column
@@ -33,7 +33,22 @@ public class Delivery {
 	@Column
 	private double charges;
 	
+	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "delivery")
 	private Set<Hotel> hotelList = new HashSet<>();
+
+
+	public Delivery(String partnerName, double charges) {
+		super();
+		this.partnerName = partnerName;
+		this.charges = charges;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Delivery [partnerName=" + partnerName + ", charges=" + charges + "]";
+	}
 	
 }
