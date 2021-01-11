@@ -48,7 +48,7 @@ public class Hotel {
 	private Set<Menu> menuList;
 	
 	@JsonManagedReference
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "hotel_delivery",
 	joinColumns = @JoinColumn(name = "hotel_id"),
 	inverseJoinColumns = @JoinColumn(name = "delivery_id"))
