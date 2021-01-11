@@ -8,4 +8,6 @@ import com.ajay.tech.entity.Delivery;
 @Repository
 public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
 
+	//Derived Queries
+	public Delivery findByPartnerName(String partnerName);
 }
