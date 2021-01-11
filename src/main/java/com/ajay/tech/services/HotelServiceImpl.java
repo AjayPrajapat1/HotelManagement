@@ -62,7 +62,7 @@ public class HotelServiceImpl implements HotelService {
 
 	@Override
 	public List<Hotel> getHotelsByLocationAndMenu(String location, String menuName) {
-		return hotelRepository.getHotelsByMenu(menuName);
+		return hotelRepository.getHotelsByLocationAndMenu(location, menuName);
 	}
 
 }
