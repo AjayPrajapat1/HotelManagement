@@ -74,4 +74,22 @@ public class HotelController {
 		return ResponseEntity.ok().body(hotel);
 	}
 	
+	@GetMapping("/hotelByDelivery/{partnerName}")
+	public ResponseEntity<List<Hotel>> getHotelsByDelivery(@PathVariable String partnerName){
+		List<Hotel> hotel = hotelService.getHotelsByDelivery(partnerName);
+		return ResponseEntity.ok().body(hotel);
+	}
+	
+	@GetMapping("/hotelByLocation/{location}")
+	public ResponseEntity<List<Hotel>> getHotelsByLocation(@PathVariable String location){
+		List<Hotel> hotel = hotelService.getHotelsByLocation(location);
+		return ResponseEntity.ok().body(hotel);
+	}
+	
+	@GetMapping("/hotelByLocationAndMenu/{location}/menuName/{menuName}")
+	public ResponseEntity<List<Hotel>> getHotelsByLocationAndMenu(@PathVariable String location,@PathVariable String menuName){
+		List<Hotel> hotel = hotelService.getHotelsByLocationAndMenu(location, menuName);
+		return ResponseEntity.ok().body(hotel);
+	}
+	
 }
