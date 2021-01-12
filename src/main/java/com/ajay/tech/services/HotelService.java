@@ -14,6 +14,7 @@ public interface HotelService {
 	public Optional<Hotel> getById(int hotelId) throws IdNotFoundException;
 	void deleteHotel(int hotelId) throws IdNotFoundException;
 	
+	public List<Hotel> getAllHotels();
 	public List<Hotel> getHotelsByCity(String city) throws HotelNotFoundException;
 	public List<Hotel> getHotelsByMenu(String menuName) throws HotelNotFoundException;
 	public List<Hotel> getHotelsByDelivery(String partnerName) throws HotelNotFoundException;

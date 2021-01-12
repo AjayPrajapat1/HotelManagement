@@ -65,4 +65,9 @@ public class HotelServiceImpl implements HotelService {
 		return hotelRepository.getHotelsByLocationAndMenu(location, menuName);
 	}
 
+	@Override
+	public List<Hotel> getAllHotels() {
+		return hotelRepository.findAll();
+	}
+
 }
