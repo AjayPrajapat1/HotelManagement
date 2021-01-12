@@ -1,12 +1,14 @@
 package com.ajay.tech.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,8 +49,29 @@ public class HotelController {
 		return ResponseEntity.ok().headers(headers).body(newHotel);
 	}
 	
+	@DeleteMapping("/delete/{hotelId}")
+	public ResponseEntity<Void> deleteHotel(@PathVariable int hotelId){
+		hotelService.deleteHotel(hotelId);
+		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/allHotels")
+	public ResponseEntity<List<Hotel>> getAllHotels(){
+		List<Hotel> hotel = hotelService.getAllHotels();
+		return ResponseEntity.ok().header("desc", "get all hotels").body(hotel);
+	}
 	
 	
+	@GetMapping("/hotelByCity/{city}")
+	public ResponseEntity<List<Hotel>> getHotelsByCity(@PathVariable String city){
+		List<Hotel> hotel = hotelService.getHotelsByCity(city);
+		return ResponseEntity.ok().body(hotel);
+	}
 	
+	@GetMapping("/hotelByMenu/{menu}")
+	public ResponseEntity<List<Hotel>> getHotelsByMenu(@PathVariable String menu){
+		List<Hotel> hotel = hotelService.getHotelsByMenu(menu);
+		return ResponseEntity.ok().body(hotel);
+	}
 	
 }
