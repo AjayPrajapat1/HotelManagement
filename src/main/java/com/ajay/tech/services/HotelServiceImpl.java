@@ -20,8 +20,8 @@ public class HotelServiceImpl implements HotelService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void add(Hotel hotel) {
-		hotelRepository.save(hotel);
+	public Hotel add(Hotel hotel) {
+		return hotelRepository.save(hotel);
 	}
 
 	@Override
