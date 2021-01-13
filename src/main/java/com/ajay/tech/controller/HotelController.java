@@ -1,12 +1,9 @@
 package com.ajay.tech.controller;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,70 +23,70 @@ public class HotelController {
 
 	@Autowired
 	private HotelService hotelService;
-	
+
 	@PostMapping("/add")
-	public ResponseEntity<Hotel> addHotel(@RequestBody Hotel hotel){
+	public ResponseEntity<Hotel> addHotel(@RequestBody Hotel hotel) {
 		Hotel newHotel = hotelService.add(hotel);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("desc", "Hotel added successfully");
 		return ResponseEntity.ok().headers(headers).body(newHotel);
 	}
-	
+
 	@PutMapping("/update")
-	public ResponseEntity<String> updateHotel(@RequestBody Hotel hotel){
+	public ResponseEntity<String> updateHotel(@RequestBody Hotel hotel) {
 		hotelService.update(hotel);
 		return ResponseEntity.ok("Updated");
 	}
-	
+
 	@GetMapping("/hotelById/{hotelId}")
-	public ResponseEntity<Optional<Hotel>> getHotelById(@PathVariable int hotelId){
-		Optional<Hotel> newHotel = hotelService.getById(hotelId);
+	public ResponseEntity<Hotel> getHotelById(@PathVariable int hotelId) {
+		Hotel newHotel = hotelService.getById(hotelId);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("desc", "Getting one hotel instance");
 		return ResponseEntity.ok().headers(headers).body(newHotel);
 	}
-	
+
 	@DeleteMapping("/delete/{hotelId}")
-	public ResponseEntity<Void> deleteHotel(@PathVariable int hotelId){
+	public ResponseEntity<Void> deleteHotel(@PathVariable int hotelId) {
 		hotelService.deleteHotel(hotelId);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@GetMapping("/allHotels")
-	public ResponseEntity<List<Hotel>> getAllHotels(){
+	public ResponseEntity<List<Hotel>> getAllHotels() {
 		List<Hotel> hotel = hotelService.getAllHotels();
 		return ResponseEntity.ok().header("desc", "get all hotels").body(hotel);
 	}
-	
-	
+
 	@GetMapping("/hotelByCity/{city}")
-	public ResponseEntity<List<Hotel>> getHotelsByCity(@PathVariable String city){
+	public ResponseEntity<List<Hotel>> getHotelsByCity(@PathVariable String city) {
 		List<Hotel> hotel = hotelService.getHotelsByCity(city);
 		return ResponseEntity.ok().body(hotel);
 	}
-	
+
 	@GetMapping("/hotelByMenu/{menu}")
-	public ResponseEntity<List<Hotel>> getHotelsByMenu(@PathVariable String menu){
+	public ResponseEntity<List<Hotel>> getHotelsByMenu(@PathVariable String menu) {
 		List<Hotel> hotel = hotelService.getHotelsByMenu(menu);
 		return ResponseEntity.ok().body(hotel);
 	}
-	
+
 	@GetMapping("/hotelByDelivery/{partnerName}")
-	public ResponseEntity<List<Hotel>> getHotelsByDelivery(@PathVariable String partnerName){
+	public ResponseEntity<List<Hotel>> getHotelsByDelivery(@PathVariable String partnerName) {
 		List<Hotel> hotel = hotelService.getHotelsByDelivery(partnerName);
 		return ResponseEntity.ok().body(hotel);
 	}
-	
+
 	@GetMapping("/hotelByLocation/{location}")
-	public ResponseEntity<List<Hotel>> getHotelsByLocation(@PathVariable String location){
+	public ResponseEntity<List<Hotel>> getHotelsByLocation(@PathVariable String location) {
 		List<Hotel> hotel = hotelService.getHotelsByLocation(location);
 		return ResponseEntity.ok().body(hotel);
 	}
-	
+
 	@GetMapping("/hotelByLocationAndMenu/{location}/menuName/{menuName}")
-	public ResponseEntity<List<Hotel>> getHotelsByLocationAndMenu(@PathVariable String location,@PathVariable String menuName){
+	public ResponseEntity<List<Hotel>> getHotelsByLocationAndMenu(@PathVariable String location,
+			@PathVariable String menuName) {
 		List<Hotel> hotel = hotelService.getHotelsByLocationAndMenu(location, menuName);
 		return ResponseEntity.ok().body(hotel);
 	}
-	
+
 }
