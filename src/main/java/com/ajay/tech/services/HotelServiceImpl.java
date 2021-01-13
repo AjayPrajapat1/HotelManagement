@@ -1,7 +1,6 @@
 package com.ajay.tech.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +8,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ajay.tech.entity.Hotel;
+import com.ajay.tech.exception.HotelNotFoundException;
+import com.ajay.tech.exception.IdNotFoundException;
 import com.ajay.tech.repository.HotelRepository;
 
 @Service
@@ -31,8 +32,8 @@ public class HotelServiceImpl implements HotelService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<Hotel> getById(int hotelId) {
-		return hotelRepository.findById(hotelId);
+	public Hotel getById(int hotelId) {
+		return hotelRepository.findById(hotelId).orElseThrow(() -> new IdNotFoundException("Id Not Found"));
 	}
 
 	@Override
@@ -42,32 +43,57 @@ public class HotelServiceImpl implements HotelService {
 
 	@Override
 	public List<Hotel> getHotelsByCity(String city) {
-		return hotelRepository.findByAddressCity(city);
+		List<Hotel> list = hotelRepository.findByAddressCity(city);
+		if (list == null || list.size() == 0) {
+			throw new HotelNotFoundException("Hotels Not Found");
+		}
+		return list;
+		
 	}
 
 	@Override
 	public List<Hotel> getHotelsByMenu(String menuName) {
-		return hotelRepository.getHotelsByMenu(menuName);
+		List<Hotel> list = hotelRepository.getHotelsByMenu(menuName);
+		if (list.isEmpty()) {
+			throw new HotelNotFoundException("Hotels Not Found");
+		}
+		return list;
 	}
 
 	@Override
 	public List<Hotel> getHotelsByDelivery(String partnerName) {
-		return hotelRepository.getHotelsByDelivery(partnerName);
+		List<Hotel> list = hotelRepository.getHotelsByDelivery(partnerName);
+		if (list.isEmpty()) {
+			throw new HotelNotFoundException("Hotels Not Found");
+		}
+		return list;
 	}
 
 	@Override
 	public List<Hotel> getHotelsByLocation(String location) {
-		return hotelRepository.findByAddressStreetName(location);
+		List<Hotel> list = hotelRepository.findByAddressStreetName(location);
+		if (list.isEmpty()) {
+			throw new HotelNotFoundException("Hotels Not Found");
+		}
+		return list;
 	}
 
 	@Override
 	public List<Hotel> getHotelsByLocationAndMenu(String location, String menuName) {
-		return hotelRepository.getHotelsByLocationAndMenu(location, menuName);
+		List<Hotel> list = hotelRepository.getHotelsByLocationAndMenu(location, menuName);
+		if (list.isEmpty()) {
+			throw new HotelNotFoundException("Hotels Not Found");
+		}
+		return list;
 	}
 
 	@Override
 	public List<Hotel> getAllHotels() {
-		return hotelRepository.findAll();
+		List<Hotel> list = hotelRepository.findAll();
+		if (list.isEmpty()) {
+			throw new HotelNotFoundException("Hotels Not Found");
+		}
+		return list;
 	}
 
 }
